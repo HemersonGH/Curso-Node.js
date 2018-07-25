@@ -1,0 +1,14 @@
+{
+  "name": "casa-do-codigo",
+  "version": "1.0.0",
+  "description": "site da casa do codigo - Curso Alura",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hemerson Batista",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
