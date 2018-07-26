@@ -11,10 +11,9 @@ module.exports = function(app) {
     });
 
     connection.query('select * from livros', function(error, results) {
-      responce.send(results);
+      responce.render('produtos/lista');
     });
 
     connection.end();
-    // responce.render("produtos/lista");
   });
 }
