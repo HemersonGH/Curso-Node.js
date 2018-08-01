@@ -1,11 +1,15 @@
 // var dbConnection = require('../infra/connectionFactory'); // load already did it
 
 module.exports = function(app) {
-  var listaProdutos = function(request, responce) {
+  var listaProdutos = function(request, responce, next) {
     var connection = app.infra.connectionFactory();
     var produtosDAO = new app.infra.ProdutosDAO(connection);
 
     produtosDAO.lista(function(error, results) {
+      if (error) {
+        return next(error);
+      }
+      
       responce.format({
         html: function() {
           responce.render('produtos/lista', {lista:results});
