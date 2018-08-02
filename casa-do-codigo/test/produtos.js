@@ -1,27 +1,34 @@
-var http = require('http');
-var assert = require('assert');
+var express = require('../config/express')();
+var request = require('supertest')(express);
 
 describe('#ProdutosController', function() {
-  it('#Listagem json', function(done) {
 
-    var configs = {
-      hostname: 'localhost',
-      port: 3000,
-      path: '/produtos',
-      headers: {
-        'Accept': 'application/json',
-        // 'Accept': 'text/html'
+  beforeEach(function(done) {
+    var conn = express.infra.connectionFactory();
+    conn.query("delete from livros", function(exception, result) {
+      if (!exception) {
+        done();
       }
-    };
-
-    // console.log("Teste de verificação de listagem JSON");
-
-    http.get(configs, function(responce) {
-      assert.equal(responce.statusCode, 200);
-      assert.equal(responce.headers['content-type'], 'application/json; charset=utf-8');
-      done();
-        // console.log("Status it's ok");
-        // console.log("Content Type And Responce it's ok");
     });
   });
+
+  it('#Listagem json', function(done) {
+    request.get('/produtos')
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+    .expect(200, done);
+  });
+
+  it('#Inserindo produto com dados inválidos', function(done) {
+    request.post('/produtos')
+    .send({titulo:"", descricao:"Novo livro"})
+    .expect(400, done);
+  });
+
+  it('#Inserindo produto com dados validos', function(done) {
+    request.post('/produtos')
+    .send({titulo:"Teste", descricao:"Inserção de novo livro com dados correto", preco:21.99})
+    .expect(302, done);
+  });
+
 });
