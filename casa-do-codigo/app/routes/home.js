@@ -6,7 +6,7 @@ module.exports = function(app) {
         produtosDAO.lista(function(erros, resultados) {
             responce.render('home/index', {livros:resultados});
         });
-        
+
         connection.end();
     });
 }

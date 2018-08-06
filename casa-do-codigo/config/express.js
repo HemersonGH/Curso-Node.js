@@ -16,8 +16,23 @@ module.exports = function() {
   app.use(expressValidator());
 
   load('routes', {cwd: 'app'})
-    .then('infra')
-    .into(app);
+  .then('infra')
+  .into(app);
+
+  app.use(function(request, responce, next) {
+    responce.status(404).render('errors/404');
+    next();
+  });
+
+  app.use(function(error, request, responce, next) {
+    if (process.env.NODE_ENV == 'production') {
+      responce.status(500).render('errors/500');
+
+      return;
+    }
+
+    next(error);
+  });
 
   return app;
 }
