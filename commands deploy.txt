@@ -1,0 +1,7 @@
+heroku apps:create 'nome-da-app'
+
+heroku apps
+
+heroku addons:create cleardb:ignite
+
+heroku addons:create cleardb:ignite --app ?'nome-da-app'
