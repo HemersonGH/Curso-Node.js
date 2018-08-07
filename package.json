@@ -1,9 +1,16 @@
 {
-  "name": "casadocodigo",
+  "name": "casa-do-codigo",
   "version": "1.0.0",
-  "description": "app de controle de cadastro de produtos",
-  "main": "app.js",
-  "author": "",
+  "description": "Site da Casa do Código - Curso Alura",
+  "main": "index.js",
+  "engines": {
+    "node": "0.12.4"
+  },
+  "scripts": {
+    "start": "node app",
+    "test": "set NODE_ENV=production && mocha --reporter spec"
+  },
+  "author": "Hemerson Batista",
   "license": "ISC",
   "dependencies": {
     "body-parser": "1.13.1",
@@ -19,15 +26,7 @@
     "socket.io": "1.3.6"
   },
   "devDependencies": {
-    "should": "^7.0.2",
-    "supertest": "^1.0.1"
-  },
-  "engines": {
-    "node": "0.12.4"
-  },
-  "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "mocha": "^5.2.0",
+    "supertest": "^3.1.0"
   }
-
 }

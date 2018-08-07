@@ -1,19 +1,17 @@
 module.exports = function(app) {
-    app.get("/promocoes/form", function(req,res) {
+    app.get("/promocoes/form", function(request, responce) {
         var connection = app.infra.connectionFactory();
-        var produtoDao = new app.infra.ProdutoDao(connection);
-
-        produtoDao.lista(function(error,results){
-            res.render('promocoes/form',{lista:results});
+        var produtosDAO = new app.infra.ProdutosDAO(connection);
+        produtosDAO.lista(function(erros, responceultados) {
+            responce.render('promocoes/form', {lista: responceultados});
         });
-
+        connection.end();
     });
 
-    app.post("/promocoes", function(req,res) {
-        var promocao = req.body;
-
-        app.get('io').emit("novaPromocao",promocao);
-        res.redirect("/promocoes/form");
+    app.post("/promocoes", function(request, responce) {
+        var promocao = request.body;
+        console.log();
+        app.get('io').emit('novaPromocao', promocao);
+        responce.redirect('promocoes/form');
     });
-    
 }
