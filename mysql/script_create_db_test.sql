@@ -1,6 +1,7 @@
 use casadocodigo_nodejs;
 
-select * from livros;
+select * from casadocodigo_nodejs.livros;
+select * from casadocodigo_nodejs_test.livros;
 
 create database casadocodigo_nodejs_test;
 
