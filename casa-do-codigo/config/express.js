@@ -24,15 +24,15 @@ module.exports = function() {
     next();
   });
 
-  app.use(function(error, request, responce, next) {
-    if (process.env.NODE_ENV == 'production') {
-      responce.status(500).render('errors/500');
-
-      return;
-    }
-
-    next(error);
-  });
+  // app.use(function(error, request, responce, next) {
+  //   if (process.env.NODE_ENV == 'production') {
+  //     responce.status(500).render('errors/500');
+  //
+  //     return;
+  //   }
+  //
+  //   next(error);
+  // });
 
   return app;
 }

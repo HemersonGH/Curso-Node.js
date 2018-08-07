@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Site da Casa do Código - Curso Alura",
   "main": "index.js",
+  "engines": {
+    "node": "4.1.1"
+  },
   "scripts": {
+    "start": "node app",
     "test": "set NODE_ENV=production && mocha --reporter spec"
   },
   "author": "Hemerson Batista",

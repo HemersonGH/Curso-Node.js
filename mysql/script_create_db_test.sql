@@ -2,10 +2,11 @@ use casadocodigo_nodejs;
 
 select * from casadocodigo_nodejs.livros;
 select * from casadocodigo_nodejs_test.livros;
+select * from heroku_0fcee529c1999fc.livros;
 
-create database casadocodigo_nodejs_test;
+create database casadocodigo_nodejs_production;
 
-use casadocodigo_nodejs_test;
+use heroku_0fcee529c1999fc;
 
 CREATE TABLE livros (
     id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
