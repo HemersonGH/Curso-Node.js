@@ -1,39 +1,41 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <div class="error">
-      <% if(validationErrors) { %>
-        <ul>
-          <% for(var i = 0; i < validationErrors.length; i++) { %>
-            <li> <%= validationErrors[i].param; %> - <%= validationErrors[i].msg; %> </li>
-          <% } %>
-        </ul>
-      <% } %>
+<%= include ../includes/header.ejs %>
+
+<div>
+    <div class ="container min-container">
+        <h2 class="basic-title">Add</h2>
+        <div class="errors">
+            <%if(validationErrors) { %>
+            <ul>
+                <% for(var i=0; i<validationErrors.length; i++) {%>
+                <li><%=validationErrors[i].param%> - <%=validationErrors[i].msg%></li>
+                <% } %>
+            </ul>
+            <%}%>
+        </div>
+        <form action="/produtos" method="post" class="well" role="form">
+            <div class="form-group">
+                <label for="titulo">Titulo</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-unchecked"></i></span>
+                    <input type="text" name="titulo" placeholder="titulo do livro" value="<%=produto.titulo%>"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="preco">Preço</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-unchecked"></i></span>
+                    <input type="text" name="preco" placeholder="valor do livro" value="<%=produto.preco%>"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="descricao">Descricao</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-unchecked"></i></span>
+                    <textarea name="descricao"><%=produto.descricao%></textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Gravar</button>
+        </form>
     </div>
-    <form class="" action="/produtos" method="post">
-      <div class="row">
-        <div class="col-md-6">
-          <label for="titulo"> Título do Livro </label>
-          <input type="text" name="titulo" id="titulo" value="<% produto.titulo %>" placeholder="Informe o título do livro">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label for="preco"> Preço do Livro </label>
-          <input type="text" name="preco" id="preco" value="<% produto.preco %>" placeholder="150.25">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <label for="descricao"> Descrição do Livro </label>
-          <textarea cols="20" rows="10" name="descricao" id="descricao" value="<% produto.descricao %>" placeholder="Descreva sobre o livro"></textarea>
-        </div>
-      </div>
-      <input type="submit" name="" value="Gravar">
-    </form>
-  </body>
-</html>
+</div>
+<%= include ../includes/footer.ejs %>

@@ -1,62 +1,78 @@
-// var dbConnection = require('../infra/connectionFactory'); // load already did it
-
 module.exports = function(app) {
-  var listaProdutos = function(request, responce, next) {
-    var connection = app.infra.connectionFactory();
-    var produtosDAO = new app.infra.ProdutosDAO(connection);
-
-    produtosDAO.lista(function(error, results) {
-      if (error) {
-        return next(error);
-      }
-      
-      responce.format({
-        html: function() {
-          responce.render('produtos/lista', {lista:results});
-        },
-        json: function() {
-          responce.json(results);
-        }
-      });
+    app.get("/produtos/form",function(req, res) {
+        res.render('produtos/form',{produto:{},validationErrors:{}});
     });
 
-    connection.end();
-  };
+    app.post("/produtos",function(req,res) {
+        var produto = req.body;
+        console.log(produto);
 
-  app.get('/produtos', listaProdutos);
+        var validadorTitulo = req.assert('titulo', 'Titulo deve ser preenchido');
+        validadorTitulo.notEmpty();
+        req.assert('preco','Preco deve ser um número').isFloat();
 
-  app.get('/produtos/form', function(request, responce) {
-    responce.render('produtos/form', {validationErrors:{}, produto:{}});
-  });
-
-  app.post('/produtos', function(request, responce) {
-    var produto = request.body;
-
-    request.assert('titulo', 'Título é obrigatório.').notEmpty();
-    request.assert('preco', 'Preço inválido.').isFloat();
-
-    var error = request.validationErrors();
-
-    if (error) {
-      responce.format({
-        html: function() {
-          responce.status(400).render('produtos/form', {validationErrors:error, produto:produto});
-        },
-        json: function() {
-          responce.status(400).json(error);
+        var errors = req.validationErrors();
+        if(errors){
+            res.format({
+                html: function(){
+                    res.status(400).render("produtos/form",{validationErrors:errors,produto:produto});
+                },
+                json: function(){
+                    res.status(400).send(errors);
+                }
+            });
+            return ;
         }
-      });
 
-      return;
-    }
+        var connection = app.infra.connectionFactory();
+        var produtoDao = new app.infra.ProdutoDao(connection);
 
-    var connection = app.infra.connectionFactory();
-    var produtosDAO = new app.infra.ProdutosDAO(connection);
 
-    produtosDAO.salva(produto, function(error, results) {
-      responce.redirect('/produtos');
+        produtoDao.salva(produto,function(exception,result){
+            if(!exception) {
+                res.redirect("/produtos");
+            }
+        });
+
+        connection.end();
+
+
     });
 
-    connection.end();
-  })
+
+    app.get("/produtos",function(req,res) {
+
+        var connection = app.infra.connectionFactory();
+        var produtoDao = new app.infra.ProdutoDao(connection);
+
+        produtoDao.lista(function(error,results,fields){
+
+
+            res.format({
+                html: function(){
+                    res.render("produtos/lista",{lista:results});
+                },
+                json: function(){
+                    res.json(results);
+                }
+            });
+
+        })
+        connection.end();
+    });
+
+    app.get("/produtos/:id",function(req,res) {
+        var connection = app.infra.connectionFactory();
+        var produtoDao = new app.infra.ProdutoDao(connection);
+
+        produtoDao.buscaPorId(req.params.id,function(error,results,fields){
+            if(results.length == 0){
+                res.status(404).send();
+                return ;
+            }
+            res.json(results);
+        });
+
+        connection.end();
+    });
 }

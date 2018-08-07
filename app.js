@@ -1,11 +1,17 @@
 var app = require('./config/express')();
-// var routeProdutos = require('./app/routes/produtos')(app); // load already did it
 var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var port = process.env.PORT || 3000;
+var io = require('socket.io')(http);    
 
-app.set('io', io);
+app.set('io',io);	
 
-http.listen(port, function() {
-  console.log("Server running at HEROKU");
+var porta = process.env.PORT || 3000;
+var server = http.listen(porta, function () {
+
+    var host = server.address().address;
+    var port = server.address().port;
+
+    console.log('Example app listening at http://%s:%s', host, port);
+
 });
+
+

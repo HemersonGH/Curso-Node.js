@@ -47,7 +47,7 @@
 <header id="layout-header">
     <div class="clearfix container">
         <a href="/" id="logo">
-            <img src="/img/logo.png" alt="Casa do Codigo">
+            <!-- <img src="http://cdn.shopify.com/s/files/1/0155/7645/t/177/assets/casa-do-codigo-blue.svg?11981592617154272979" alt="Casa do Codigo"> -->
         </a>
 
         <div id="header-content">
@@ -87,21 +87,16 @@
 <section id="index-section" class="container middle" ng-controller="HomeController">
 
     <ul id="home-highlight-collection">
-      <% for(i=0; i<3; i++) { %>
-        <% if(livros[i] != null) { %>
-          <li class="col-left">
+        <%for(i=0; i<3; i++) {%>
+        <li class="col-left">
             <a href="linkDetalhe" class="block clearfix">
-              <img width="170" height="240" src="/img/logo.png"
-              alt="<%=livros[i].titulo%>"
-              title="<%=livros[i].titulo%>"/>
+                <img width="170" height="240" src="urlImagem" alt="<%=livros[i].titulo%>" title="<%=livros[i].titulo%>"/>
 
-              <h2 class="product-title"><%=livros[i].titulo%></h2>
-              <small class="buy-button">Lançamento!</small>
+                <h2 class="product-title"><%=livros[i].titulo%></h2>
+                <small class="buy-button">Lan&#231;amento!</small>
             </a>
-          </li>
-        <% } %>
-
-      <% } %>
+        </li>
+        <%}%>
     </ul>
 
 
@@ -115,7 +110,7 @@
                     <h2 class="product-title"><%=livros[i].titulo%></h2>
                     <img width="143"
                          height="202"
-                         src="/img/logo.png"
+                         src="linkImagemCapa"
                          alt="<%=livros[i].titulo%>"
                          title="<%=livros[i].titulo%>"/>
 
@@ -256,8 +251,9 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
     var socket = io();
-    socket.on('novaPromocao', function(data) {
-        alert("Livro em promoção " + data.livro.id);
+    socket.on('novaPromocao', function (data) {
+        //document.location.href= "/produtos/"+data.livro.id+"?promocao="+data.mensagem;
+        console.log(data.livro);
     });
 </script>
 </body>
